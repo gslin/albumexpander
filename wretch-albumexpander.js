@@ -1,8 +1,9 @@
 // ==UserScript==
 // @name	Wretch Album Expander
+// @version	0.0.20100315
 // @namespace	http://blog.gslin.org/plugins/wretch-album-expander
 // @description	Expand wretch album
-// @homepage	http://blog.gslin.org/plugins/wretch-album-expander
+// @homepage	http://github.com/gslin/albumexpander
 // @include	http://www.wretch.cc/album/album.php*
 // ==/UserScript==
 
