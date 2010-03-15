@@ -7,6 +7,11 @@
 // ==/UserScript==
 
 (function(){
+    // Google Chrome cannot parse @include fully-correctly
+    if (!document.location.href.match('/album.php')) {
+	return;
+    }
+
     var side = document.getElementsByClassName('side');
     var sideLength = side.length;
 
