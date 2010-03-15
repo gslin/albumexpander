@@ -6,33 +6,28 @@
 // @include	http://www.wretch.cc/album/album.php*
 // ==/UserScript==
 
-function album_expander($)
-{
-    var imgs = '';
+(function(){
+    var side = document.getElementsByClassName('side');
+    var sideLength = side.length;
 
-    $('.side').each(function() {
-	    var a = $('a', this);
-	    var alink = a.attr('href');
-	    var img = $('img', this);
-	    var imgsrc = img.attr('src').replace(/\/thumbs\/t?/, '/');
+    var htmlCode = '';
 
-	    imgs += '<a href="' + alink + '"><img alt="" src="' + imgsrc + '"></a><br />';
-	});
-    $('table').slice(3,4).html(imgs);
-}
+    for (var i = 0; i < sideLength; i++) {
+	try {
+	    var el = side[i];
 
-function GM_wait()
-{
-    if (typeof unsafeWindow.jQuery == 'undefined')
-	window.setTimeout(GM_wait, 100);
-    else
-	album_expander(unsafeWindow.jQuery);
-}
+	    var imgLink = el.getElementsByTagName('a')[0].href;
 
-var GM_JQ = document.createElement('script');
-GM_JQ.src = 'http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js';
-GM_JQ.type = 'text/javascript';
-document.getElementsByTagName('head')[0].appendChild(GM_JQ);
+	    var img = el.getElementsByTagName('img')[0];
+	    var imgNewUrl = img.src.replace(/\/thumbs\/t?/, '/');
 
-GM_wait();
+	    htmlCode += '<tr><td><a href="' + imgLink + '"><img alt="" src="' + imgNewUrl + '"/></a></td></tr>';
+	} catch(err) {
+	}
+    }
 
+    try {
+	document.getElementById('ad_square').innerHTML = htmlCode;
+    } catch(err) {
+    }
+})();
