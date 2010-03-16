@@ -1,33 +1,33 @@
 // ==UserScript==
-// @name        PIXNET Album Expander
-// @namespace   http://blog.gslin.org/plugins/pixnet-album-expander
-// @description Expand PIXNET album
-// @homepage    http://blog.gslin.org/plugins/pixnet-album-expander
-// @include     http://www.pixnet.net/album/*/*
+// @name	PIXNET Album Expander
+// @version	0.0.20100316
+// @namespace	http://blog.gslin.org/plugins/pixnet-album-expander
+// @description	Expand PIXNET album
+// @homepage	http://github.com/gslin/albumexpander
+// @include	http://*.pixnet.net/album/set/*
 // ==/UserScript==
 
-function album_expander($)
-{
-    $('img.thumb').removeAttr('width').removeAttr('height').each(function(i){
-        var u = $(this).attr('src');
-        u = u.replace(/thumb_/g, '');
-        $(this).attr('src', u);
-        });
+(function(){
+    if (!document.location.href.match('/album/set/')) {
+	return;
+    }
 
-    $('.thumbBox, .thumbImg, .thumbImg > span').attr('width', 'auto !important').attr('height', 'auto !important');
-}
+    var htmlCode = '';
 
-function GM_wait()
-{
-    if (typeof unsafeWindow.jQuery == 'undefined')
-        window.setTimeout(GM_wait, 100);
-    else
-        album_expander(unsafeWindow.jQuery);
-}
+    var contentBody = document.getElementById('contentBody');
+    var imageThumbs = contentBody.getElementsByClassName('thumb');
+    var imageThumbsLength = imageThumbs.length;
 
-var GM_JQ = document.createElement('script');
-GM_JQ.src = 'http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js';
-GM_JQ.type = 'text/javascript';
-document.getElementsByTagName('head')[0].appendChild(GM_JQ);
+    for (var i = 0; i < imageThumbsLength; i++) {
+	try {
+	    var el = imageThumbs[i];
+	    var imgLink = el.parentNode.href;
+	    var imgNewUrl = el.src.replace(/\/thumb_/, '/');
 
-GM_wait();
+	    htmlCode += '<a href="' + imgLink + '"><img alt="" src="' + imgNewUrl + '"></a><br>';
+	} catch(err) {
+	}
+    }
+
+    contentBody.innerHTML = htmlCode;
+})();
