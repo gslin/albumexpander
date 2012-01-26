@@ -15,6 +15,17 @@
 
     var go = function(res){
         eval(res.responseText);
+
+        var items = jQuery('.side a');
+        items.each(function(){
+            var me = jQuery(this);
+            var href = me.attr('href');
+            jQuery.get(href, [], function(data){
+                var target = jQuery(data);
+                var newSrc = target.find('#DisplayImage').attr('src');
+                me.find('img').attr('src', newSrc);
+            });
+        });
     };
 
     // Load jQuery 1.7.1
@@ -23,27 +34,4 @@
         url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
         onload: go
     });
-
-    var side = document.getElementsByClassName('side');
-    var sideLength = side.length;
-
-    var htmlCode = '';
-
-    for (var i = 0; i < sideLength; i++) {
-        try {
-            var el = side[i];
-
-            var imgLink = el.getElementsByTagName('a')[0].href;
-
-            var img = el.getElementsByTagName('img')[0];
-            var imgNewUrl = img.src.replace(/\/thumbs\/t?/, '/');
-
-            htmlCode += '<tr><td><a href="' + imgLink + '"><img alt="" src="' + imgNewUrl + '"/></a></td></tr>';
-        } catch(err) {
-        }
-    }
-
-    try {
-        document.getElementById('ad_square').innerHTML = htmlCode;
-    } catch(e){}
 })();
