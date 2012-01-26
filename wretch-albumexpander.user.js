@@ -13,6 +13,15 @@
         return;
     }
 
+    // Load jQuery 1.7.1
+    GM_xmlhttpRequest({
+        method: 'GET',
+        url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
+        onload: function(res){
+            eval(res.responseText);
+        },
+    });
+
     var side = document.getElementsByClassName('side');
     var sideLength = side.length;
 
