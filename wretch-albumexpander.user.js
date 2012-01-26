@@ -13,13 +13,15 @@
         return;
     }
 
+    var go = function(res){
+        eval(res.responseText);
+    };
+
     // Load jQuery 1.7.1
     GM_xmlhttpRequest({
         method: 'GET',
         url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
-        onload: function(res){
-            eval(res.responseText);
-        },
+        onload: go
     });
 
     var side = document.getElementsByClassName('side');
