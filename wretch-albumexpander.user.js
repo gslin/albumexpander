@@ -43,6 +43,5 @@
 
     try {
         document.getElementById('ad_square').innerHTML = htmlCode;
-    } catch(err) {
-    }
+    } catch(e){}
 })();
