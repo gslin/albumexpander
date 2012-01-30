@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Yam Album Expander
-// @version     0.0.20100316
+// @version     20120131.0
 // @namespace   http://blog.gslin.org/plugins/yam-album-expander
 // @description Expand Yam Album
 // @homepage    http://github.com/gslin/albumexpander
@@ -12,29 +12,26 @@
         return;
     }
 
-    var htmlCode = '';
+    var go = function(res){
+        eval(res.responseText);
 
-    var imgItems = document.getElementsByClassName('albumShow');
-    var imgItemsLength = imgItems.length;
+        var itemHtmls = [];
 
-    for (var i = 0; i < imgItemsLength; i++) {
-        try {
-            var el = imgItems[i];
+        var items = jQuery('.photoimg a');
+        items.each(function(){
+            var me = jQuery(this);
+            var href = me.attr('href');
+            var src = me.find('img').attr('src').replace('t_', '');
+            itemHtmls.push('<a href="' + href + '"><img src="' + src + '"></a>');
+        });
 
-            var a = el.getElementsByTagName('a')[0];
-            var aLink = a.href;
-            var img = el.getElementsByTagName('img')[0];
-            var imgNewUrl = img.src.replace('/t_', '/');
+        jQuery('#photobody').html(itemHtmls.join('<br>'));
+    };
 
-            htmlCode += '<a href="' + aLink + '"><img alt="" src="' + imgNewUrl + '"/></a>';
-        } catch(err) {
-        }
-    }
-
-    try {
-        // Because I cannot find id/class to match, so use parentNode^3...
-        var contentBody = imgItems[0].parentNode.parentNode.parentNode;
-        contentBody.innerHTML = htmlCode;
-    } catch(err) {
-    }
+    // Load jQuery 1.7.1
+    GM_xmlhttpRequest({
+        method: 'GET',
+        url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
+        onload: go
+    });
 })();
