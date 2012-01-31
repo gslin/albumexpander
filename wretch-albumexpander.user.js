@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Wretch Album Expander
-// @version     20120131.0
+// @version     20120201.0
 // @namespace   http://blog.gslin.org/plugins/wretch-album-expander
 // @description Expand wretch album
 // @homepage    http://github.com/gslin/albumexpander
@@ -26,7 +26,7 @@
             var href = me.attr('href');
             itemObjs.push(jQuery.get(href, [], function(data){
                 var target = jQuery(data);
-                var newSrc = target.find('#DisplayImage').attr('src');
+                var newSrc = target.find('#DisplayImage, .displayimg').attr('src');
                 itemHtmls[i] = '<a href="' + href + '"><img alt="" src="' + newSrc + '"></a>';
             }));
         });
