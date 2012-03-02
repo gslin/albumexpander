@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        PIXNET Album Expander
-// @version     0.0.20100316
+// @version     20120303.0
 // @namespace   http://blog.gslin.org/plugins/pixnet-album-expander
 // @description Expand PIXNET album
 // @homepage    http://github.com/gslin/albumexpander
@@ -14,7 +14,7 @@
 
     var htmlCode = '';
 
-    var contentBody = document.getElementById('contentBody');
+    var contentBody = document.getElementById('left-column-1');
     var imageThumbs = contentBody.getElementsByClassName('thumb');
     var imageThumbsLength = imageThumbs.length;
 
@@ -22,9 +22,9 @@
         try {
             var el = imageThumbs[i];
             var imgLink = el.parentNode.href;
-            var imgNewUrl = el.src.replace(/\/thumb_/, '/');
+            var imgNewUrl = el.src.replace(/_s\./, '.');
 
-            htmlCode += '<a href="' + imgLink + '"><img alt="" src="' + imgNewUrl + '"></a><br>';
+            htmlCode += '<a href="' + imgLink + '"><img style="max-width:100%" alt="" src="' + imgNewUrl + '"></a><br>';
         } catch(err) {
         }
     }
