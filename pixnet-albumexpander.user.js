@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        PIXNET Album Expander
-// @version     0.0.20100316
+// @version     20120305.0
 // @namespace   http://blog.gslin.org/plugins/pixnet-album-expander
 // @description Expand PIXNET album
 // @homepage    http://github.com/gslin/albumexpander
